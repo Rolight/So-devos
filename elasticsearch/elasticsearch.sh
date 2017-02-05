@@ -40,9 +40,6 @@ start() {
     --log-opt max-size=10m \
     --log-opt max-file=9 \
     daocloud.io/rolight/so-elasticsearch \
-    --cluster.name=so \
-    --network.bind_host=0.0.0.0 \
-    --network.publish_host=${HostIP}
 
   check_exec_success "$?" "start elasticsearch container"
 
