@@ -1,0 +1,81 @@
+index:
+  analysis:
+    tokenizer:
+      comma_sep:
+        type: pattern
+        pattern: '[,，]'
+    filter:
+      nGram_2_to_20:
+        type: edgeNGram
+        min_gram: 2
+        max_gram: 20
+      prefix_pinyin:
+        type: pinyin
+        first_letter: only
+        padding_char: ''
+    analyzer:
+      full_pinyin:
+        type: custom
+        tokenizer: ik_max_word
+        filter:
+          - pinyin
+          - lowercase
+          - trim
+          - unique
+      prefix_pinyin:
+        type: custom
+        tokenizer: ik_max_word
+        filter:
+          - prefix_pinyin
+          - lowercase
+          - trim
+          - unique
+      full_pinyin_ngram:
+        type: custom
+        tokenizer: ik_max_word
+        filter:
+          - pinyin
+          - lowercase
+          - nGram_2_to_20
+          - trim
+          - unique
+      prefix_pinyin_ngram:
+        type: custom
+        tokenizer: ik_max_word
+        filter:
+          - prefix_pinyin
+          - lowercase
+          - nGram_2_to_20
+          - trim
+          - unique
+      comma_sep:
+        type: custom
+        tokenizer: comma_sep
+        filter:
+          - lowercase
+          - trim
+  indexing:
+    slowlog:
+      threshold:
+        index:
+          warn: 1s
+          info: 500ms
+          debug: 200ms
+          trace: 50ms
+      source: 1000
+  search:
+    slowlog:
+      threshold:
+        query:
+          warn: 1s
+          info: 500ms
+          debug: 200ms
+          trace: 50ms
+        fetch:
+          warn: 200ms
+          info: 60ms
+          debug: 10ms
+          trace: 5ms
+indices.fielddata.cache.size: 70%
+script.engine.groovy.inline.aggs: on
+script.engine.groovy.inline.search: on
