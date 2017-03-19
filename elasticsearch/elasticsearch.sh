@@ -35,7 +35,7 @@ start() {
   docker run -d --name elasticsearch \
     -v ${ESData}:/usr/share/elasticsearch/data \
     -v ${ESLog}:/usr/share/elasticsearch/logs \
-    --net=host \
+    -p 9200:9200 \
     --restart=always \
     --log-opt max-size=10m \
     --log-opt max-file=9 \

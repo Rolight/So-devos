@@ -36,8 +36,8 @@ start() {
   docker rm -v redis 2>/dev/null
 
   docker run -d --name redis \
+    -p 6379:6379 \
     -v ${RedisData}:/data \
-    --net=host \
     --log-opt max-size=10m \
     --log-opt max-file=9 \
     redis:3
