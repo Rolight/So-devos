@@ -17,13 +17,13 @@ if [[ -a ${CurDir}/envs.sh ]]; then
 fi
 
 # get host ip
-HostIP="$(ip route get 1 | awk '{print $NF;exit}')"
+HostIP="$( python -c "import socket; print(socket.gethostbyname(socket.gethostname()))" )"
 
 # set data dir
 RedisData=/data/redis/data
 
 # ES URL
-ElasticsearchURL=http://192.168.1.103:9200
+ElasticsearchURL=http://$HostIP:9200
 
 update_images() {
   # pull redis docker image
@@ -40,7 +40,7 @@ start() {
 
   docker run -d --name kibana \
     -v ${RedisData}:/data \
-    --net=host \
+    -p 5601:5601 \
     --log-opt max-size=10m \
     --log-opt max-file=9 \
     -e ELASTICSEARCH_URL=${ElasticsearchURL} \

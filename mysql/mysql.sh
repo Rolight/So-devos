@@ -33,7 +33,7 @@ start() {
   docker run -d --name mysql \
     -v ${MyData}:/var/lib/mysql \
     -v ${MyLog}:/var/log/mysql \
-    --net=host \
+    -p 3306:3306 \
     --log-opt max-size=10m \
     --log-opt max-file=9 \
     -e MYSQL_ROOT_PASSWORD=toor333666 \
